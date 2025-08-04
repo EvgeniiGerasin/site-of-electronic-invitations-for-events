@@ -531,11 +531,11 @@
                 startScreen.style.display = 'none';
                 invitation.style.display = 'block';
                 musicControl.style.display = 'flex';
-                // Прокручиваем к началу страницы
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                // // Прокручиваем к началу страницы
+                // window.scrollTo({
+                //     top: 0,
+                //     behavior: 'smooth'
+                // });
                 // Автоматическое воспроизведение музыки
                 setTimeout(() => {
                     audio.play().catch(e => console.log('Ошибка воспроизведения:', e));
@@ -587,7 +587,7 @@
                     }
                 });
             }, {
-                threshold: 0.1,
+                threshold: 0.08,
                 rootMargin: '0px 0px -50px 0px'
             });
             // Наблюдаем за всеми элементами с классом animate-on-scroll
