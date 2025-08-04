@@ -238,57 +238,6 @@
             margin-bottom: 30px;
             text-align: center;
         }
-        .form-group {
-            margin-bottom: 25px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-            color: #334155;
-            font-size: 1.1rem;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            transition: border-color 0.5s ease;
-            background: #ffffff;
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: rgb(79, 120, 83);
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .submit-button {
-            background: rgb(79, 120, 83);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            font-size: 1.2rem;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.5s ease;
-            width: 100%;
-            box-shadow: 0 8px 20px rgba(79, 120, 83, 0.3);
-        }
-        .submit-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(79, 120, 83, 0.4);
-        }
         /* Управление музыкой */
         .music-control {
             position: fixed;
@@ -360,9 +309,6 @@
             }
             .content {
                 padding: 30px;
-            }
-            .form-row {
-                grid-template-columns: 1fr;
             }
             .start-screen h1 {
                 font-size: 2.5rem;
@@ -455,48 +401,15 @@
                     <span class="map-link">Открыть карту</span>
                 </div>
             </div>
+            
+            <!-- Замененная секция формы -->
             <div class="guest-form animate-on-scroll">
                 <h2>Подтверждение участия</h2>
-                <form id="guestForm">
-                    <div class="form-group animate-on-scroll">
-                        <label for="guestName">Ваше имя *</label>
-                        <input type="text" id="guestName" required placeholder="Введите ваше имя">
-                    </div>
-                    <div class="form-group animate-on-scroll">
-                        <label for="attendance">Вы приедете? *</label>
-                        <select id="attendance" required>
-                            <option value="">Выберите вариант</option>
-                            <option value="yes">Да, обязательно приду!</option>
-                            <option value="no">К сожалению, не смогу</option>
-                            <option value="maybe">Пока не уверен(а)</option>
-                        </select>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group animate-on-scroll">
-                            <label for="drink">Что будете пить?</label>
-                            <select id="drink">
-                                <option value="">Выберите напиток</option>
-                                <option value="wine">Вино</option>
-                                <option value="champagne">Шампанское</option>
-                                <option value="vodka">Водка</option>
-                                <option value="non-alcohol">Безалкогольные напитки</option>
-                                <option value="other">Другое</option>
-                            </select>
-                        </div>
-                        <div class="form-group animate-on-scroll">
-                            <label for="allergies">Аллергии (если есть)</label>
-                            <input type="text" id="allergies" placeholder="Перечислите аллергены">
-                        </div>
-                    </div>
-                    <div class="form-group animate-on-scroll">
-                        <label for="comments">Комментарии</label>
-                        <textarea id="comments" rows="4" placeholder="У вас есть что-то важное сообщить?"></textarea>
-                    </div>
-                    <div class="form-group animate-on-scroll">
-                        <button type="submit" class="submit-button">Отправить ответ</button>
-                    </div>
-                </form>
+                <p style="text-align: center; margin-bottom: 20px; color: #475569;">Пожалуйста, заполните форму ниже для подтверждения вашего участия:</p>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZsyUHW6hw8H2xzXBG6DXlTeH3fUmRZdA05y-7l5NvvA-XyA/viewform?embedded=true" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">Загрузка формы...</iframe>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #64748b;">Форма загружается из Google Forms. Ваши ответы будут записаны напрямую в таблицу невесты и жениха.</p>
             </div>
+            
         </div>
         <div class="footer animate-on-scroll">
             <p>С любовью, Виктория и Евгений</p>
@@ -557,18 +470,7 @@
             // Открываем карту Яндекса с адресом ресторана
             window.open('https://yandex.ru/maps/?text=Ресторан Сказка, ул. Цветочная, 10', '_blank');
         }
-        // Обработка формы гостей
-        document.getElementById('guestForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('guestName').value;
-            const attendance = document.getElementById('attendance').value;
-            if (name && attendance) {
-                alert(`Спасибо, ${name}! Ваш ответ успешно отправлен.`);
-                this.reset();
-            } else {
-                alert('Пожалуйста, заполните обязательные поля.');
-            }
-        });
+        
         // Добавляем обработчик клика на карточку с местом проведения
         const mapCard = document.querySelector('.detail-card[onclick="openMap()"]');
         if (mapCard) {
