@@ -11,7 +11,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Montserrat', sans-serif;
             background: #f0f4f8;
@@ -20,7 +19,6 @@
             overflow-x: hidden;
             position: relative;
         }
-
         /* Декоративные элементы фона */
         .background-decoration {
             position: absolute;
@@ -31,20 +29,17 @@
             pointer-events: none;
             z-index: -1;
         }
-
         .geometric-shape {
             position: absolute;
             opacity: 0.1;
             animation: rotate 30s linear infinite;
         }
-
         .circle {
             width: 100px;
             height: 100px;
             border-radius: 50%;
             background: rgba(168, 216, 234, 0.3);
         }
-
         .triangle {
             width: 0;
             height: 0;
@@ -52,21 +47,18 @@
             border-right: 50px solid transparent;
             border-bottom: 100px solid rgba(168, 216, 234, 0.3);
         }
-
         .diamond {
             width: 80px;
             height: 80px;
             background: rgba(168, 216, 234, 0.3);
             transform: rotate(45deg);
         }
-
         .hexagon {
             width: 80px;
             height: 80px;
             background: rgba(168, 216, 234, 0.3);
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
         }
-
         /* Стартовая страница с кнопкой */
         .start-screen {
             text-align: center;
@@ -77,7 +69,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .start-screen h1 {
             color: rgb(79, 120, 83);
             font-family: 'Playfair Display', serif;
@@ -85,14 +76,12 @@
             margin-bottom: 30px;
             animation: fadeInUp 2s ease-out;
         }
-
         .start-screen p {
             color: #64748b;
             font-size: 1.2rem;
             margin-bottom: 40px;
             animation: fadeInUp 2s ease-out 0.3s both;
         }
-
         .open-button {
             background: rgb(79, 120, 83);
             color: white;
@@ -107,12 +96,10 @@
             box-shadow: 0 10px 25px rgba(79, 120, 83, 0.3);
             animation: fadeInUp 2s ease-out 0.6s both, pulse 3s ease-in-out infinite 2s;
         }
-
         .open-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(79, 120, 83, 0.4);
         }
-
         /* Основное приглашение */
         .invitation-container {
             background: #ffffff;
@@ -125,7 +112,6 @@
             display: none;
             margin: 20px auto;
         }
-
         .header {
             background: rgb(79, 120, 83);
             color: white;
@@ -133,19 +119,16 @@
             padding: 40px 20px 30px;
             position: relative;
         }
-
         .header h1 {
             font-family: 'Playfair Display', serif;
             font-size: 3rem;
             margin-bottom: 10px;
         }
-
         .header p {
             font-size: 1.3rem;
             opacity: 0.9;
             margin-bottom: 30px;
         }
-
         .couple-photo {
             width: 160px;
             height: 160px;
@@ -158,28 +141,31 @@
             color: white;
             font-size: 0.9rem;
             text-align: center;
-            padding: 20px;
             border: 4px solid white;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
         }
-
+        .couple-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
         .content {
             padding: 50px;
             text-align: center;
         }
-
         /* Анимации появления блоков */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 1.2s ease-out, transform 1.2s ease-out;
         }
-
         .animate-on-scroll.visible {
             opacity: 1;
             transform: translateY(0);
         }
-
         .welcome-message {
             line-height: 1.8;
             color: #334155;
@@ -190,18 +176,15 @@
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
         }
-
         .event-details {
             margin-bottom: 40px;
         }
-
         .event-details h2 {
             color: rgb(79, 120, 83);
             font-family: 'Playfair Display', serif;
             font-size: 2.2rem;
             margin-bottom: 30px;
         }
-
         .detail-card {
             background: #f8fafc;
             padding: 25px;
@@ -212,28 +195,23 @@
             text-align: center;
             cursor: pointer;
         }
-
         .detail-card:last-child {
             margin-bottom: 0;
         }
-
         .detail-card:hover {
             transform: translateY(-8px);
             background: #ecfdf5;
         }
-
         .detail-card h3 {
             color: rgb(79, 120, 83);
             margin-bottom: 15px;
             font-size: 1.3rem;
         }
-
         .detail-card p {
             color: #475569;
             font-size: 1.1rem;
             line-height: 1.6;
         }
-
         .map-link {
             color: rgb(79, 120, 83);
             text-decoration: underline;
@@ -242,11 +220,9 @@
             margin-top: 10px;
             font-size: 1.1rem;
         }
-
         .map-link:hover {
             color: #047857;
         }
-
         /* Форма гостей */
         .guest-form {
             background: #f8fafc;
@@ -255,7 +231,6 @@
             margin: 40px 0;
             text-align: left;
         }
-
         .guest-form h2 {
             color: rgb(79, 120, 83);
             font-family: 'Playfair Display', serif;
@@ -263,11 +238,9 @@
             margin-bottom: 30px;
             text-align: center;
         }
-
         .form-group {
             margin-bottom: 25px;
         }
-
         .form-group label {
             display: block;
             margin-bottom: 10px;
@@ -275,7 +248,6 @@
             color: #334155;
             font-size: 1.1rem;
         }
-
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -288,20 +260,17 @@
             transition: border-color 0.5s ease;
             background: #ffffff;
         }
-
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: rgb(79, 120, 83);
         }
-
         .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
-
         .submit-button {
             background: rgb(79, 120, 83);
             color: white;
@@ -316,12 +285,10 @@
             width: 100%;
             box-shadow: 0 8px 20px rgba(79, 120, 83, 0.3);
         }
-
         .submit-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 25px rgba(79, 120, 83, 0.4);
         }
-
         /* Управление музыкой */
         .music-control {
             position: fixed;
@@ -343,11 +310,9 @@
             z-index: 1000;
             display: none;
         }
-
         .music-control:hover {
             transform: scale(1.1) rotate(10deg);
         }
-
         .footer {
             background: #1e293b;
             color: white;
@@ -355,7 +320,6 @@
             padding: 25px;
             font-size: 1rem;
         }
-
         /* Анимации */
         @keyframes fadeInUp {
             from {
@@ -367,7 +331,6 @@
                 transform: translateY(0);
             }
         }
-
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -379,79 +342,62 @@
                 transform: scale(1);
             }
         }
-
         @keyframes rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         /* Адаптивность */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5rem;
             }
-            
             .header p {
                 font-size: 1.1rem;
             }
-            
             .couple-photo {
                 width: 140px;
                 height: 140px;
             }
-            
             .content {
                 padding: 30px;
             }
-            
             .form-row {
                 grid-template-columns: 1fr;
             }
-            
             .start-screen h1 {
                 font-size: 2.5rem;
             }
         }
-
         @media (max-width: 480px) {
             body {
                 padding: 10px;
             }
-            
             .start-screen {
                 padding: 20px;
             }
-            
             .start-screen h1 {
                 font-size: 2rem;
             }
-            
             .header {
                 padding: 30px 15px 20px;
             }
-            
             .header h1 {
                 font-size: 2rem;
             }
-            
             .couple-photo {
                 width: 120px;
                 height: 120px;
                 font-size: 0.8rem;
             }
-            
             .content {
                 padding: 20px;
             }
-            
             .detail-card {
                 padding: 20px;
             }
-            
             .guest-form {
                 padding: 25px;
             }
-            
             .welcome-message {
                 padding: 20px;
                 font-size: 1.1rem;
@@ -471,31 +417,28 @@
         <div class="geometric-shape hexagon" style="bottom: 30%; left: 15%;"></div>
         <div class="geometric-shape circle" style="top: 70%; left: 25%;"></div>
     </div>
-
     <!-- Стартовая страница с кнопкой -->
     <div class="start-screen" id="startScreen">
         <h1>Особенное приглашение</h1>
         <p>Нажмите кнопку, чтобы открыть ваше личное приглашение</p>
         <button class="open-button" onclick="openInvitation()">Открыть приглашение</button>
     </div>
-
     <!-- Основное приглашение -->
     <div class="invitation-container" id="invitation">
         <div class="header animate-on-scroll">
             <h1>Виктория & Евгений</h1>
             <p>Приглашают вас на свою свадьбу</p>
             <div class="couple-photo">
-                Фотография невесты и жениха будет здесь
+                <!-- Добавлено изображение из файла -->
+                <img src="image.png" alt="Фотография Виктории и Евгения">
             </div>
         </div>
-        
         <div class="content">
             <div class="welcome-message animate-on-scroll">
                 <p>Дорогие родные и близкие!</p>
                 <p>Мы счастливы пригласить вас разделить с нами самый важный день в нашей жизни.</p>
                 <p>Ваше присутствие сделает этот день еще более особенным для нас.</p>
             </div>
-            
             <div class="event-details animate-on-scroll">
                 <h2>Детали мероприятия</h2>
                 <div class="detail-card animate-on-scroll">
@@ -512,7 +455,6 @@
                     <span class="map-link">Открыть карту</span>
                 </div>
             </div>
-            
             <div class="guest-form animate-on-scroll">
                 <h2>Подтверждение участия</h2>
                 <form id="guestForm">
@@ -520,7 +462,6 @@
                         <label for="guestName">Ваше имя *</label>
                         <input type="text" id="guestName" required placeholder="Введите ваше имя">
                     </div>
-                    
                     <div class="form-group animate-on-scroll">
                         <label for="attendance">Вы приедете? *</label>
                         <select id="attendance" required>
@@ -530,7 +471,6 @@
                             <option value="maybe">Пока не уверен(а)</option>
                         </select>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group animate-on-scroll">
                             <label for="drink">Что будете пить?</label>
@@ -543,78 +483,65 @@
                                 <option value="other">Другое</option>
                             </select>
                         </div>
-                        
                         <div class="form-group animate-on-scroll">
                             <label for="allergies">Аллергии (если есть)</label>
                             <input type="text" id="allergies" placeholder="Перечислите аллергены">
                         </div>
                     </div>
-                    
                     <div class="form-group animate-on-scroll">
                         <label for="comments">Комментарии</label>
                         <textarea id="comments" rows="4" placeholder="У вас есть что-то важное сообщить?"></textarea>
                     </div>
-                    
                     <div class="form-group animate-on-scroll">
                         <button type="submit" class="submit-button">Отправить ответ</button>
                     </div>
                 </form>
             </div>
         </div>
-        
         <div class="footer animate-on-scroll">
             <p>С любовью, Виктория и Евгений</p>
         </div>
     </div>
-    
     <!-- Кнопка управления музыкой -->
     <button class="music-control" id="musicControl" onclick="toggleMusic()">
         🎵
     </button>
-    
     <!-- Аудио элемент -->
     <audio id="backgroundMusic" loop>
         <source src="sound.mp3" type="audio/mpeg">
         Ваш браузер не поддерживает аудио элемент.
     </audio>
-
     <script>
         let musicPlaying = false;
         const audio = document.getElementById('backgroundMusic');
         const musicControl = document.getElementById('musicControl');
         const startScreen = document.getElementById('startScreen');
         const invitation = document.getElementById('invitation');
-        
         function openInvitation() {
             // Скрываем стартовый экран с анимацией
             startScreen.style.transition = 'all 1s ease-out';
             startScreen.style.opacity = '0';
             startScreen.style.transform = 'translateY(-50px)';
-            
             // Показываем приглашение после задержки
             setTimeout(() => {
                 startScreen.style.display = 'none';
                 invitation.style.display = 'block';
                 musicControl.style.display = 'flex';
-                
                 // Прокручиваем к началу страницы
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
-                
                 // Автоматическое воспроизведение музыки
                 setTimeout(() => {
                     audio.play().catch(e => console.log('Ошибка воспроизведения:', e));
                     musicPlaying = true;
                     musicControl.innerHTML = '🔊';
                 }, 1000);
-                
                 // Запускаем анимации появления блоков
                 setTimeout(startScrollAnimations, 500);
             }, 1000);
         }
-        
         function toggleMusic() {
             if (musicPlaying) {
                 audio.pause();
@@ -626,19 +553,15 @@
                 musicPlaying = true;
             }
         }
-        
         function openMap() {
             // Открываем карту Яндекса с адресом ресторана
             window.open('https://yandex.ru/maps/?text=Ресторан Сказка, ул. Цветочная, 10', '_blank');
         }
-        
         // Обработка формы гостей
         document.getElementById('guestForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const name = document.getElementById('guestName').value;
             const attendance = document.getElementById('attendance').value;
-            
             if (name && attendance) {
                 alert(`Спасибо, ${name}! Ваш ответ успешно отправлен.`);
                 this.reset();
@@ -646,7 +569,6 @@
                 alert('Пожалуйста, заполните обязательные поля.');
             }
         });
-        
         // Добавляем обработчик клика на карточку с местом проведения
         const mapCard = document.querySelector('.detail-card[onclick="openMap()"]');
         if (mapCard) {
@@ -656,7 +578,6 @@
                 }
             });
         }
-        
         // Функция для анимаций при прокрутке
         function startScrollAnimations() {
             const observer = new IntersectionObserver((entries) => {
@@ -671,13 +592,11 @@
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             });
-            
             // Наблюдаем за всеми элементами с классом animate-on-scroll
             document.querySelectorAll('.animate-on-scroll').forEach((el) => {
                 observer.observe(el);
             });
         }
-        
         // Прокручиваем к началу при загрузке страницы
         window.addEventListener('load', () => {
             window.scrollTo(0, 0);
