@@ -457,11 +457,11 @@
                 <h2>Детали мероприятия</h2>
                 <div class="detail-card animate-on-scroll">
                     <h3>Дата</h3>
-                    <p>15 июля 2024 года</p>
+                    <p>30 апреля 2025 года</p>
                 </div>
                 <div class="detail-card animate-on-scroll">
                     <h3>Время</h3>
-                    <p>16:00</p>
+                    <p>17:00</p>
                 </div>
                 <div class="detail-card animate-on-scroll" onclick="openMap()">
                     <h3>Место</h3>
@@ -531,11 +531,11 @@
                 startScreen.style.display = 'none';
                 invitation.style.display = 'block';
                 musicControl.style.display = 'flex';
-                // // Прокручиваем к началу страницы
-                // window.scrollTo({
-                //     top: 0,
-                //     behavior: 'smooth'
-                // });
+                // Прокручиваем к началу страницы
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
                 // Автоматическое воспроизведение музыки
                 setTimeout(() => {
                     audio.play().catch(e => console.log('Ошибка воспроизведения:', e));
@@ -558,7 +558,7 @@
             }
         }
         function openMap() {
-            const url = 'https://yandex.ru/maps/?text=Ресторан Сказка, ул. Цветочная, 10';
+            const url = 'https://yandex.ru/maps/?text= 53.332736, 34.285263';
             const newWindow = window.open(url, '_blank');
 
             if (!newWindow || newWindow.closed) {
