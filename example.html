@@ -14,6 +14,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         /* Приглашение открыть */
         body {
             /* Большая надпись */
@@ -557,22 +558,20 @@
             }
         }
         function openMap() {
-            // Открываем карту Яндекса с адресом ресторана
             const url = 'https://yandex.ru/maps/?text=Ресторан Сказка, ул. Цветочная, 10';
-
-            // Пытаемся открыть в новой вкладке/окне
             const newWindow = window.open(url, '_blank');
 
-            // Если window.open заблокирован, пытаемся открыть в том же окне
-            if (!newWindow || newWindow.closed || newWindow.location.href === 'about:blank') {
+            if (!newWindow || newWindow.closed) {
                 window.location.href = url;
             }
         }
-        // Добавляем обработчик клика на карточку с местом проведения
-        const mapCard = document.querySelector('.detail-card[onclick="openMap()"]');
+
+        // Привязываем обработчик
+        const mapCard = document.querySelector('.detail-card'); // или более точный селектор
         if (mapCard) {
             mapCard.addEventListener('click', function (e) {
-                if (!e.target.classList.contains('map-link')) {
+                // Если клик был не по ссылке (с классом map-link), то открываем карту
+                if (!e.target.closest('.map-link')) {
                     openMap();
                 }
             });
