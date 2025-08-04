@@ -400,8 +400,25 @@
                     <p>Ресторан "Сказка"<br>ул. Цветочная, 10</p>
                     <span class="map-link">Открыть карту</span>
                 </div>
+                <!-- Новый блок: Дресс-код -->
+                <div class="detail-card animate-on-scroll" onclick="toggleDetails(this)">
+                    <h3>👔 Дресс-код</h3>
+                    <p>Классический вечерний стиль</p>
+                    <p style="display:none; margin-top: 15px; font-size: 0.95rem; color: #475569;">
+                        Мы будем рады видеть вас в элегантных нарядах. Пожалуйста, избегайте спортивных костюмов и чересчур casual одежды.
+                    </p>
+                    <span class="map-link" style="display:block; margin-top: 10px;">Показать подробности</span>
+                </div>
+                <!-- Новый блок: Цветы -->
+                <div class="detail-card animate-on-scroll" onclick="toggleDetails(this)">
+                    <h3>💐 Цветы</h3>
+                    <p>Цветы не требуются</p>
+                    <p style="display:none; margin-top: 15px; font-size: 0.95rem; color: #475569;">
+                        Ваше присутствие - лучший подарок! Приятным комплиментом для нас вместо цветов будет бутылка вашего любимого вина, которая мы обещаем не завянет.
+                    </p>
+                    <span class="map-link" style="display:block; margin-top: 10px;">Показать подробности</span>
+                </div>
             </div>
-            
             <!-- Замененная секция формы -->
             <div class="guest-form animate-on-scroll">
                 <h2>Подтверждение участия</h2>
@@ -409,7 +426,6 @@
                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZsyUHW6hw8H2xzXBG6DXlTeH3fUmRZdA05y-7l5NvvA-XyA/viewform?embedded=true" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">Загрузка формы...</iframe>
                 <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #64748b;">Форма загружается из Google Forms. Ваши ответы будут записаны напрямую в таблицу невесты и жениха.</p>
             </div>
-            
         </div>
         <div class="footer animate-on-scroll">
             <p>С любовью, Виктория и Евгений</p>
@@ -470,7 +486,6 @@
             // Открываем карту Яндекса с адресом ресторана
             window.open('https://yandex.ru/maps/?text=Ресторан Сказка, ул. Цветочная, 10', '_blank');
         }
-        
         // Добавляем обработчик клика на карточку с местом проведения
         const mapCard = document.querySelector('.detail-card[onclick="openMap()"]');
         if (mapCard) {
@@ -503,6 +518,22 @@
         window.addEventListener('load', () => {
             window.scrollTo(0, 0);
         });
+        
+        // Функция для переключения видимости дополнительной информации в карточках
+        function toggleDetails(cardElement) {
+            const paragraphs = cardElement.querySelectorAll('p');
+            const link = cardElement.querySelector('.map-link');
+            if (paragraphs.length > 1 && link) {
+                const detailParagraph = paragraphs[1]; // Второй <p> - это детали
+                if (detailParagraph.style.display === 'none' || !detailParagraph.style.display) {
+                    detailParagraph.style.display = 'block';
+                    link.textContent = 'Скрыть подробности';
+                } else {
+                    detailParagraph.style.display = 'none';
+                    link.textContent = 'Показать подробности';
+                }
+            }
+        }
     </script>
 </body>
 </html>
