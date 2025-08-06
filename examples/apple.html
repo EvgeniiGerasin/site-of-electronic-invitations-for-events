@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадьба Виктории и Евгения</title>
+    <!-- Inter — современный геометрический шрифт, близкий к San Francisco -->
+    <link href="https://cdn.jsdelivr.net/npm/@inter-ui/web/inter.css" rel="stylesheet">
+    <style>
+        /* === Глобальные стили === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Пастельная цветовая палитра */
+        :root {
+            --color-rose: #f8e6e9;
+            --color-beige: #f5f5f7;
+            --color-gold: #e8d8c5;
+            --color-gray-light: #e5e5e5;
+            --color-gray: #a3a3a3;
+            --color-gray-dark: #4a4a4a;
+            --color-black: #1a1a1a;
+            --border-radius: 18px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-light: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Frosted glass карточки */
+        .frosted {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* === Стартовый экран === */
+        .start-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 40px;
+            gap: 24px;
+        }
+
+        .start-screen h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--color-black);
+            letter-spacing: -0.5px;
+        }
+
+        .start-screen p {
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            max-width: 400px;
+        }
+
+        .open-button {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .open-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* === Основное приглашение === */
+        .invitation-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            display: none;
+        }
+
+        /* Заголовок с фоновым изображением и frosted overlay */
+        .header {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('1754464921.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.8px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        /* Основной контент */
+        .content {
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Приветственное сообщение */
+        .welcome-message {
+            background: var(--color-beige);
+            padding: 32px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            color: var(--color-gray-dark);
+            line-height: 1.8;
+            box-shadow: var(--shadow-light);
+        }
+
+        .welcome-message p {
+            margin-bottom: 16px;
+        }
+
+        .welcome-message p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Карточки событий */
+        .event-details h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .detail-card {
+            background: white;
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--border-radius);
+            padding: 28px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            text-align: center;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+        }
+
+        .detail-card h3 {
+            font-size: 1.3rem;
+            color: var(--color-black);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .detail-card p {
+            color: var(--color-gray-dark);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .map-link {
+            color: var(--color-gray);
+            font-weight: 500;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 1.05rem;
+            display: block;
+            margin-top: 12px;
+        }
+
+        .map-link:hover {
+            color: var(--color-rose);
+        }
+
+        /* Цвета дресс-кода */
+        .color-circles {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .color-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Форма подтверждения */
+        .guest-form {
+            background: white;
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .guest-form h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .guest-form p {
+            color: var(--color-gray);
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .guest-form iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-gray);
+            font-size: 1rem;
+            background: var(--color-beige);
+            border-top: 1px solid var(--color-gray-light);
+        }
+
+        /* Кнопка музыки — полупрозрачная, как в iOS */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.3rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .music-control:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .start-screen h1 {
+                font-size: 2.3rem;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            .header p {
+                font-size: 1.2rem;
+            }
+            .content {
+                padding: 40px 20px;
+            }
+            .guest-form {
+                padding: 30px 20px;
+            }
+            .welcome-message,
+            .detail-card {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            .start-screen {
+                padding: 20px;
+            }
+            .start-screen h1 {
+                font-size: 2rem;
+            }
+            .header {
+                height: 320px;
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header p {
+                font-size: 1.1rem;
+            }
+            .content {
+                padding: 30px 16px;
+                gap: 30px;
+            }
+            .music-control {
+                width: 52px;
+                height: 52px;
+                font-size: 1.2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Основное приглашение -->
+    <div class="start-screen" id="startScreen">
+        <h1>Виктория & Евгений</h1>
+        <p>Свадьба — 30 апреля 2025 года</p>
+        <button class="open-button" onclick="openInvitation()">
+            Открыть приглашение
+        </button>
+    </div>
+
+    <div class="invitation-container" id="invitation">
+        <div class="header">
+            <div class="header-content">
+                <h1>Виктория & Евгений</h1>
+                <p>Приглашают вас на свою свадьбу</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-message animate-on-scroll">
+                <p>Дорогие родные и близкие!</p>
+                <p>Мы счастливы пригласить вас разделить с нами самый важный день в нашей жизни.</p>
+                <p>Ваше присутствие сделает этот день ещё более особенным для нас.</p>
+            </div>
+
+            <div class="event-details animate-on-scroll">
+                <h2>Детали мероприятия</h2>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Дата</h3>
+                    <p>30 апреля 2025 года</p>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Время</h3>
+                    <p>17:00</p>
+                </div>
+                <div class="detail-card animate-on-scroll" onclick="openMap()">
+                    <h3>Место</h3>
+                    <p>Ресторан "Сказка"<br>ул. Цветочная, 10</p>
+                    <span class="map-link">Открыть карту</span>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Дресс-код</h3>
+                    <p>Классический вечерний стиль</p>
+                    <p style="margin-top: 16px; font-size: 0.95rem; color: var(--color-gray);">
+                        Поддержите нашу цветовую гамму:
+                    </p>
+                    <div class="color-circles">
+                        <div class="color-circle" style="background-color: #9c7d6b;"></div>
+                        <div class="color-circle" style="background-color: #f7dcc7;"></div>
+                        <div class="color-circle" style="background-color: #ffe2e7;"></div>
+                    </div>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Цветы</h3>
+                    <p>Цветы не требуются</p>
+                    <p style="margin-top: 16px; font-size: 0.95rem; color: var(--color-gray);">
+                        Ваше присутствие — лучший подарок. Вместо цветов — бутылка любимого вина.
+                    </p>
+                </div>
+            </div>
+
+            <div class="guest-form animate-on-scroll">
+                <h2>Подтверждение участия</h2>
+                <p>Пожалуйста, заполните форму ниже:</p>
+                <iframe
+                    src="https://docs.google.com/forms/d/e/1FAIpQLScZsyUHW6hw8H2xzXBG6DXlTeH3fUmRZdA05y-7l5NvvA-XyA/viewform?embedded=true"
+                    frameborder="0"
+                    marginheight="0"
+                    marginwidth="0">
+                    Загрузка формы...
+                </iframe>
+                <p style="margin-top: 16px; font-size: 0.9rem; color: var(--color-gray);">
+                    Ответы поступят напрямую к нам.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer animate-on-scroll">
+            <p>С любовью, Виктория и Евгений</p>
+        </div>
+    </div>
+
+    <!-- Кнопка управления музыкой -->
+    <button class="music-control frosted" id="musicControl" onclick="toggleMusic()">🎵</button>
+
+    <!-- Аудио -->
+    <audio id="backgroundMusic" loop>
+        <source src="sound.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+
+    <!-- Скрипты -->
+    <script>
+        let musicPlaying = false;
+        const audio = document.getElementById('backgroundMusic');
+        const musicControl = document.getElementById('musicControl');
+        const startScreen = document.getElementById('startScreen');
+        const invitation = document.getElementById('invitation');
+
+        function openInvitation() {
+            startScreen.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            startScreen.style.opacity = '0';
+            startScreen.style.transform = 'translateY(-30px)';
+
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                invitation.style.display = 'block';
+                musicControl.style.display = 'flex';
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                setTimeout(() => {
+                    audio.play().catch(e => console.log('Автовоспроизведение заблокировано:', e));
+                    musicPlaying = true;
+                    musicControl.textContent = '🔊';
+                }, 800);
+
+                startScrollAnimations();
+            }, 800);
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                audio.pause();
+                musicControl.textContent = '🔇';
+                musicPlaying = false;
+            } else {
+                audio.play().catch(e => console.log('Ошибка:', e));
+                musicControl.textContent = '🔊';
+                musicPlaying = true;
+            }
+        }
+
+        function openMap() {
+            window.open('https://yandex.ru/maps/?text=53.332736,34.285263', '_blank');
+        }
+
+        // Анимации при прокрутке
+        function startScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+
+        window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>
