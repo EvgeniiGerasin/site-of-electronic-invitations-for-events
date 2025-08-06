@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронное приглашение</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Основные цвета */
+            --color-bg-main: #f5f0e6; /* Теплый кремовый фон */
+            --color-bg-secondary: #e8e0d0; /* Немного темнее крем */
+            --color-accent-terracotta: #b85c38; /* Терракотовый */
+            --color-accent-olive: #7a8c5d; /* Оливково-зелёный */
+            --color-accent-brown: #5a4a3d; /* Тёмно-коричневый */
+            --color-accent-dustypink: #d4a5a3; /* Пыльно-розовый */
+            --color-text-dark: #4a4030; /* Тёмный текст */
+            --color-text-medium: #6b6050; /* Средний текст */
+            --color-text-light: #9a8f7f; /* Светлый текст */
+            
+            /* Текстуры и фон */
+            --texture-bg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f0e6"/><path d="M0 0L100 100M100 0L0 100" stroke="%23e8e0d0" stroke-width="0.5" opacity="0.1"/></svg>'); /* Имитация текстуры */
+            
+            /* Формы */
+            --border-radius-soft: 12px;
+            --border-radius-card: 8px;
+            --box-shadow-soft: 0 4px 12px rgba(90, 74, 61, 0.15);
+            --box-shadow-hover: 0 6px 16px rgba(90, 74, 61, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--color-bg-main);
+            background-image: var(--texture-bg);
+            color: var(--color-text-dark);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .background-decoration {
+            display: none; /* Убираем геометрические декорации */
+        }
+
+        /* Стартовая страница с кнопкой */
+        .start-screen {
+            text-align: center;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(245, 240, 230, 0.7); /* Полупрозрачный фон для контраста */
+            border-radius: var(--border-radius-soft);
+        }
+        .start-screen h1 {
+            color: var(--color-accent-brown);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 2s ease-out;
+        }
+        .start-screen p {
+            color: var(--color-text-medium);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            animation: fadeInUp 2s ease-out 0.3s both;
+        }
+        .open-button {
+            background: var(--color-accent-terracotta);
+            color: #fff9f5;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-family: 'Lora', serif;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            box-shadow: var(--box-shadow-soft);
+            animation: fadeInUp 2s ease-out 0.6s both, pulse 3s ease-in-out infinite 2s;
+        }
+        .open-button:hover {
+            background: #a54d2d; /* Немного темнее терракота */
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        /* Основное приглашение */
+        .invitation-container {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-text-light);
+            border-radius: var(--border-radius-soft);
+            box-shadow: var(--box-shadow-soft);
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            display: none;
+            margin: 20px auto;
+        }
+
+        .header {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('rusticus.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            min-height: 400px;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .header h1,
+        .header p {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            position: relative;
+            margin: 5px 0;
+            width: 100%;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        .couple-photo {
+            display: none;
+        }
+
+        .content {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .welcome-message {
+            line-height: 1.8;
+            color: var(--color-text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            background: #f0e8d9; /* Светлее основного фона */
+            padding: 35px;
+            border-radius: var(--border-radius-card);
+            box-shadow: var(--box-shadow-soft);
+            border: 1px solid var(--color-text-light);
+        }
+
+        .event-details {
+            margin-bottom: 40px;
+        }
+        .event-details h2 {
+            color: var(--color-accent-brown);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+
+        .detail-card {
+            background: #f0e8d9;
+            padding: 25px;
+            border-radius: var(--border-radius-card);
+            box-shadow: var(--box-shadow-soft);
+            transition: all 0.4s ease;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid var(--color-text-light);
+        }
+        .detail-card:last-child {
+            margin-bottom: 0;
+        }
+        .detail-card:hover {
+            transform: translateY(-5px);
+            background: #e8dfd1; /* Немного темнее при наведении */
+            box-shadow: var(--box-shadow-hover);
+        }
+        .detail-card h3 {
+            color: var(--color-accent-terracotta);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .detail-card p {
+            color: var(--color-text-medium);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .map-link {
+            color: var(--color-accent-olive);
+            text-decoration: underline;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+        .map-link:hover {
+            color: var(--color-accent-brown);
+        }
+
+        .guest-form {
+            background: #f0e8d9;
+            padding: 40px;
+            border-radius: var(--border-radius-card);
+            margin: 40px 0;
+            text-align: left;
+            border: 1px solid var(--color-text-light);
+            box-shadow: var(--box-shadow-soft);
+        }
+        .guest-form h2 {
+            color: var(--color-accent-brown);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--color-accent-terracotta);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: var(--box-shadow-soft);
+            transition: all 0.5s ease;
+            z-index: 1000;
+            display: none;
+        }
+        .music-control:hover {
+            background: #a54d2d;
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .footer {
+            background: #e8dfd1;
+            color: var(--color-text-medium);
+            text-align: center;
+            padding: 25px;
+            font-size: 1rem;
+            border-top: 1px solid var(--color-text-light);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            .header p {
+                font-size: 1.1rem;
+            }
+            .content {
+                padding: 30px;
+            }
+            .start-screen h1 {
+                font-size: 2.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .start-screen {
+                padding: 20px;
+            }
+            .start-screen h1 {
+                font-size: 2rem;
+            }
+            .header {
+                padding: 60px 15px 40px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .content {
+                padding: 20px;
+            }
+            .detail-card {
+                padding: 20px;
+            }
+            .guest-form {
+                padding: 25px;
+            }
+            .welcome-message {
+                padding: 20px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .color-circles {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .color-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--color-text-light);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-decoration">
+        <!-- Декорации убраны -->
+    </div>
+
+    <div class="start-screen" id="startScreen">
+        <h1>Особенное приглашение</h1>
+        <p>Нажмите кнопку, чтобы открыть ваше личное приглашение</p>
+        <button class="open-button" onclick="openInvitation()">Открыть приглашение</button>
+    </div>
+
+    <div class="invitation-container" id="invitation">
+        <div class="header animate-on-scroll">
+            <h1>Виктория & Евгений</h1>
+            <p>Приглашают вас на свою свадьбу</p>
+        </div>
+        <div class="content">
+            <div class="welcome-message animate-on-scroll">
+                <p>Дорогие родные и близкие!</p>
+                <p>Мы счастливы пригласить вас разделить с нами самый важный день в нашей жизни.</p>
+                <p>Ваше присутствие сделает этот день еще более особенным для нас.</p>
+            </div>
+            <div class="event-details animate-on-scroll">
+                <h2>Детали мероприятия</h2>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Дата</h3>
+                    <p>30 апреля 2025 года</p>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Время</h3>
+                    <p>17:00</p>
+                </div>
+                <div class="detail-card animate-on-scroll" onclick="openMap()">
+                    <h3>Место</h3>
+                    <p>Ресторан "Сказка"<br>ул. Цветочная, 10</p>
+                    <span class="map-link">Открыть карту</span>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Дресс-код</h3>
+                    <p>Классический вечерний стиль</p>
+                    <p style="margin-top: 15px; font-size: 0.95rem; color: var(--color-text-medium);">
+                        Мы будем очень рады, если вы поддержите цветовую палитру нашей свадьбы:
+                    </p>
+                    <div class="color-circles">
+                        <div class="color-circle" style="background-color: #9c7d6b;"></div>
+                        <div class="color-circle" style="background-color: #f7dcc7;"></div>
+                        <div class="color-circle" style="background-color: #ffe2e7;"></div>
+                    </div>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <h3>Цветы</h3>
+                    <p>Цветы не требуются</p>
+                    <p style="margin-top: 15px; font-size: 0.95rem; color: var(--color-text-medium);">
+                        Ваше присутствие - лучший подарок! Приятным комплиментом для нас вместо цветов будет бутылка
+                        вашего любимого вина, которая мы обещаем не завянет.
+                    </p>
+                </div>
+            </div>
+            <div class="guest-form animate-on-scroll">
+                <h2>Подтверждение участия</h2>
+                <p style="text-align: center; margin-bottom: 20px; color: var(--color-text-medium);">Пожалуйста, заполните форму ниже для подтверждения вашего участия:</p>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZsyUHW6hw8H2xzXBG6DXlTeH3fUmRZdA05y-7l5NvvA-XyA/viewform?embedded=true" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">Загрузка формы...</iframe>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: var(--color-text-light);">Форма загружается из Google Forms. Ваши ответы будут записаны напрямую в таблицу невесты и жениха.</p>
+            </div>
+        </div>
+        <div class="footer animate-on-scroll">
+            <p>С любовью, Виктория и Евгений</p>
+        </div>
+    </div>
+
+    <button class="music-control" id="musicControl" onclick="toggleMusic()">🎵</button>
+
+    <audio id="backgroundMusic" loop>
+        <source src="sound.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
+
+    <script>
+        let musicPlaying = false;
+        const audio = document.getElementById('backgroundMusic');
+        const musicControl = document.getElementById('musicControl');
+        const startScreen = document.getElementById('startScreen');
+        const invitation = document.getElementById('invitation');
+
+        function openInvitation() {
+            startScreen.style.transition = 'all 1s ease-out';
+            startScreen.style.opacity = '0';
+            startScreen.style.transform = 'translateY(-50px)';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                invitation.style.display = 'block';
+                musicControl.style.display = 'flex';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => {
+                    audio.play().catch(e => console.log('Ошибка воспроизведения:', e));
+                    musicPlaying = true;
+                    musicControl.innerHTML = '🔊';
+                }, 1000);
+                setTimeout(startScrollAnimations, 500);
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                audio.pause();
+                musicControl.innerHTML = '🔇';
+                musicPlaying = false;
+            } else {
+                audio.play().catch(e => console.log('Ошибка воспроизведения:', e));
+                musicControl.innerHTML = '🔊';
+                musicPlaying = true;
+            }
+        }
+
+        function openMap() {
+            const url = 'https://yandex.ru/maps/?text= 53.332736, 34.285263';
+            const newWindow = window.open(url, '_blank');
+            if (!newWindow || newWindow.closed) {
+                window.location.href = url;
+            }
+        }
+
+        const mapCard = document.querySelector('.detail-card:nth-child(3)'); // Селектор для карточки места
+        if (mapCard) {
+            mapCard.addEventListener('click', function (e) {
+                if (!e.target.closest('.map-link')) {
+                    openMap();
+                }
+            });
+        }
+
+        function startScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 200);
+                    }
+                });
+            }, {
+                threshold: 0.08,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+                observer.observe(el);
+            });
+        }
+
+        window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>
