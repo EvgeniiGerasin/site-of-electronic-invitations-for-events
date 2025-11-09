@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадьба Софии и Максима</title>
+    <link href="https://cdn.jsdelivr.net/npm/@inter-ui/web/inter.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fffdf8 0%, #fdfbf5 100%);
+            color: #4a4536;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --lemon-yellow: #fce36a;
+            --lemon-soft: #fff8e1;
+            --olive-green: #7a8b52;
+            --light-green: #a9ba82;
+            --warm-gray: #8b887a;
+            --white: #ffffff;
+            --border-radius: 20px;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --shadow-light: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .frosted {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: var(--shadow-light);
+        }
+
+        .start-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 40px;
+            gap: 32px;
+            background: linear-gradient(180deg, #fffbe7, #fffdf8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-screen::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(252, 227, 106, 0.15) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        .start-screen::after {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(169, 186, 130, 0.1) 0%, transparent 70%);
+            bottom: -80px;
+            left: -80px;
+            z-index: 0;
+        }
+
+        .start-screen-content {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+        }
+
+        .start-screen h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--olive-green);
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .start-screen p {
+            font-size: 1.2rem;
+            color: var(--warm-gray);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .open-button {
+            background: var(--lemon-yellow);
+            color: #4a4536;
+            border: none;
+            padding: 18px 48px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(252, 227, 106, 0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .open-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(252, 227, 106, 0.3) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .open-button:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 35px rgba(252, 227, 106, 0.7);
+        }
+
+        .open-button:hover::before {
+            opacity: 1;
+        }
+
+        .invitation-container {
+            max-width: 850px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            display: none;
+            box-shadow: var(--shadow);
+        }
+
+        .header {
+            position: relative;
+            height: 450px;
+            background: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 253, 248, 0.5)), 
+                        url('https://placehold.co/1200x600/fce36a/4a4536?text=Wedding') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 60px 40px;
+            text-align: center;
+            color: #4a4536;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(6px);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #4a4536;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 70px 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .welcome-message {
+            background: var(--lemon-soft);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            font-size: 1.15rem;
+            color: #5b573d;
+            line-height: 1.8;
+            box-shadow: var(--shadow-light);
+            border-left: 6px solid var(--lemon-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-message::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--lemon-yellow), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .event-details h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--olive-green);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .event-details h2::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--lemon-yellow);
+            border-radius: 3px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .detail-card {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: var(--border-radius);
+            padding: 32px 24px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--lemon-yellow);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(252, 227, 106, 0.4);
+        }
+
+        .detail-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .detail-card h3 {
+            font-size: 1.4rem;
+            color: var(--olive-green);
+            margin-bottom: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .detail-card p {
+            color: #5b573d;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .map-link {
+            color: var(--light-green);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .map-link:hover {
+            color: var(--olive-green);
+        }
+
+        .color-circles {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .color-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .color-circle:hover {
+            transform: scale(1.2);
+        }
+
+        .guest-form {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 45px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+        }
+
+        .guest-form h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--olive-green);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .guest-form p {
+            color: var(--warm-gray);
+            text-align: center;
+            margin-bottom: 28px;
+            font-size: 1.1rem;
+        }
+
+        .guest-form iframe {
+            width: 100%;
+            height: 620px;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 45px 30px;
+            color: var(--olive-green);
+            font-size: 1.1rem;
+            background: var(--lemon-soft);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-weight: 500;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 25px rgba(252, 227, 106, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1000;
+            display: none;
+            transition: all 0.3s ease;
+            color: var(--olive-green);
+        }
+
+        .music-control:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 10px 30px rgba(252, 227, 106, 0.5);
+        }
+
+        .music-control i {
+            transition: transform 0.3s ease;
+        }
+
+        .music-control:hover i {
+            transform: rotate(20deg);
+        }
+
+        @media (max-width: 768px) {
+            .content { 
+                padding: 50px 25px; 
+            }
+            .header { 
+                height: 380px; 
+                padding: 50px 25px;
+            }
+            .header h1 { 
+                font-size: 2.8rem; 
+            }
+            .header p { 
+                font-size: 1.2rem; 
+            }
+            .event-details h2 { 
+                font-size: 1.7rem; 
+            }
+            .detail-card { 
+                padding: 24px 18px; 
+            }
+            .guest-form { 
+                padding: 35px 20px; 
+            }
+            .guest-form iframe { 
+                height: 500px; 
+            }
+            .music-control {
+                bottom: 25px;
+                right: 25px;
+                width: 56px;
+                height: 56px;
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .start-screen h1 { 
+                font-size: 2.4rem; 
+            }
+            .start-screen p { 
+                font-size: 1rem; 
+            }
+            .open-button { 
+                padding: 14px 36px; 
+                font-size: 1rem; 
+            }
+            .header { 
+                height: 320px; 
+            }
+            .header h1 { 
+                font-size: 2.2rem; 
+            }
+            .header p { 
+                font-size: 1.1rem; 
+            }
+            .content { 
+                padding: 40px 20px; 
+            }
+            .details-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .guest-form iframe { 
+                height: 450px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="start-screen" id="startScreen">
+        <div class="start-screen-content">
+            <h1>София & Максим</h1>
+            <p>Свадьба — 15 июня 2025 года</p>
+            <button class="open-button" onclick="openInvitation()">
+                <i class="fas fa-envelope-open-text"></i> Открыть приглашение
+            </button>
+        </div>
+    </div>
+
+    <div class="invitation-container" id="invitation">
+        <div class="header">
+            <div class="header-content">
+                <h1>София & Максим</h1>
+                <p>Приглашают вас на свою свадьбу</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-message animate-on-scroll">
+                <p>Дорогие друзья и родные!</p>
+                <p>Мы счастливы пригласить вас разделить с нами самый важный день в нашей жизни.</p>
+                <p>Пусть этот день будет наполнен любовью, радостью и незабываемыми моментами.</p>
+            </div>
+
+            <div class="event-details animate-on-scroll">
+                <h2>Детали мероприятия</h2>
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <h3><i class="fas fa-calendar-day"></i> Дата</h3>
+                        <p>15 июня 2025 года</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3><i class="fas fa-clock"></i> Время</h3>
+                        <p>16:00</p>
+                    </div>
+                    <div class="detail-card" onclick="openMap()">
+                        <h3><i class="fas fa-map-marker-alt"></i> Место</h3>
+                        <p>Вилла "Лимонный сад"<br>ул. Солнечная, 25</p>
+                        <a href="#" class="map-link" onclick="openMap(); return false;">
+                            <i class="fas fa-map"></i> Открыть карту
+                        </a>
+                    </div>
+                    <div class="detail-card">
+                        <h3><i class="fas fa-palette"></i> Дресс-код</h3>
+                        <p>Светлый элегантный стиль</p>
+                        <p style="margin-top: 16px;">Рекомендуемые оттенки:</p>
+                        <div class="color-circles">
+                            <div class="color-circle" style="background-color: #fce36a;"></div>
+                            <div class="color-circle" style="background-color: #fff8e1;"></div>
+                            <div class="color-circle" style="background-color: #a9ba82;"></div>
+                            <div class="color-circle" style="background-color: #f5f5dc;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guest-form animate-on-scroll">
+                <h2>Подтверждение участия</h2>
+                <p>Пожалуйста, заполните форму до 1 мая 2025 года:</p>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZsyUHW6hw8H2xzXBG6DXlTeH3fUmRZdA05y-7l5NvvA-XyA/viewform?embedded=true"></iframe>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>С любовью, София и Максим 💛</p>
+        </div>
+    </div>
+
+    <button class="music-control frosted" id="musicControl" onclick="toggleMusic()">
+        <i class="fas fa-music"></i>
+    </button>
+    <audio id="backgroundMusic" loop>
+        <source src="armani.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let musicPlaying = false;
+        const audio = document.getElementById('backgroundMusic');
+        const musicControl = document.getElementById('musicControl');
+        const startScreen = document.getElementById('startScreen');
+        const invitation = document.getElementById('invitation');
+
+        function openInvitation() {
+            startScreen.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            startScreen.style.opacity = '0';
+            startScreen.style.transform = 'translateY(-40px)';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                invitation.style.display = 'block';
+                musicControl.style.display = 'flex';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => {
+                    audio.play().catch(()=>{});
+                    musicPlaying = true;
+                    musicControl.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }, 800);
+                startScrollAnimations();
+            }, 800);
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                audio.pause();
+                musicControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                musicPlaying = false;
+            } else {
+                audio.play().catch(()=>{});
+                musicControl.innerHTML = '<i class="fas fa-volume-up"></i>';
+                musicPlaying = true;
+            }
+        }
+
+        function openMap() {
+            window.open('https://yandex.ru/maps/?text=53.332736,34.285263', '_blank');
+        }
+
+        function startScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 250);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+    </script>
+</body>
+</html>
+
